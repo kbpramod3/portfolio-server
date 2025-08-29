@@ -13,16 +13,14 @@ const portfolioService = {
 
   addStock: async (userId, stockData) => {
     const newStock = await Order.create({ user_id: userId, ...stockData });
-    const cached = portfolioCache.get(userId) || [];
-    portfolioCache.set(userId, [...cached, newStock]);
+    portfolioCache.delete(userId);
     return newStock;
   },
 
   removeStock: async (userId, id) => {
     const deleted = await Order.destroy({ where: { user_id: userId, id } });
     if (deleted) {
-      const cached = portfolioCache.get(userId) || [];
-      portfolioCache.set(userId, cached.filter(item => item.id !== id));
+      portfolioCache.delete(userId);
     }
     return deleted;
   }

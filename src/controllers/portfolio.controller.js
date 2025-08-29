@@ -22,7 +22,7 @@ const portfolioController = {
     }
   },
 
-    async removeStock(req, res) {
+    removeStock: async (req, res) => {
         try {
         const userId = 1;
         const id = req.params.id;
